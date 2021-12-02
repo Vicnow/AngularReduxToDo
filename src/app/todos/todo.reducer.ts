@@ -2,8 +2,10 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { Todo } from './models/todo.models';
 import * as actions from './todo.actions';
  
-export const initialState:Todo[] = [];
- 
+export const initialState:Todo[] = [
+    new Todo('Salvar al mundo')
+];
+
 const _todoReducer = createReducer(initialState,
   on(actions.crear, (state,{texto}) => [...state, new Todo(texto)]),
 );
