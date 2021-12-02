@@ -21,6 +21,17 @@ const _todoReducer = createReducer(initialState,
       return todo;
     });
   }),
+  on(actions.edit, (state,{id,texto}) => {
+    return state.map(todo => {
+      if(todo.id === id){
+        return{
+          ...todo,texto
+        }
+      }else{
+        return todo;
+      }
+    });
+  }),
 );
  
 export function todoReducer(state: Todo[] | undefined, action:Action) {

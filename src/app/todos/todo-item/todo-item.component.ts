@@ -34,13 +34,26 @@ export class TodoItemComponent implements OnInit {
 
   edit(){
     this.editando = true;
+    this.txtInput.setValue(this.todo.texto);
     setTimeout(()=>{
       this.txtInputFisico.nativeElement.select();
     },1)
+
   }
 
   endEdit(){
     this.editando = false;
+
+    if (this.txtInput.invalid || this.txtInput.value === this.todo.texto) {
+      return;
+    }
+
+    this.store.dispatch(
+        actions.edit({
+        id: this.todo.id,
+        texto: this.txtInput.value,
+      })
+    );
   }
 
 }
