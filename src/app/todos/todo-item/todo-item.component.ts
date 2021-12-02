@@ -56,4 +56,7 @@ export class TodoItemComponent implements OnInit {
     );
   }
 
+  borrar(){
+    this.store.dispatch(actions.deleteTodo({id:this.todo.id}));
+  }
 }

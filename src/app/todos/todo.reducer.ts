@@ -10,6 +10,7 @@ export const initialState:Todo[] = [
 
 const _todoReducer = createReducer(initialState,
   on(actions.crear,   (state,{texto}) => [...state, new Todo(texto)]),
+  on(actions.deleteTodo, (state,{id}) =>  state.filter(todo => todo.id !== id)),
   on(actions.toggle,  (state,{id}) => {
     return state.map( todo => {
       if (todo.id === id) {
@@ -19,6 +20,14 @@ const _todoReducer = createReducer(initialState,
         }
       }
       return todo;
+    });
+  }),
+  on(actions.toggleAll,  (state,{completado}) => {
+    return state.map( todo => {
+      return {
+        ...todo,
+        completado: completado
+      }
     });
   }),
   on(actions.edit, (state,{id,texto}) => {
