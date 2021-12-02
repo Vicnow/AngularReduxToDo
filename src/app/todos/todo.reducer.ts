@@ -9,7 +9,18 @@ export const initialState:Todo[] = [
 ];
 
 const _todoReducer = createReducer(initialState,
-  on(actions.crear, (state,{texto}) => [...state, new Todo(texto)]),
+  on(actions.crear,   (state,{texto}) => [...state, new Todo(texto)]),
+  on(actions.toggle,  (state,{id}) => {
+    return state.map( todo => {
+      if (todo.id === id) {
+        return {
+          ...todo,
+          completado: !todo.completado
+        }
+      }
+      return todo;
+    });
+  }),
 );
  
 export function todoReducer(state: Todo[] | undefined, action:Action) {

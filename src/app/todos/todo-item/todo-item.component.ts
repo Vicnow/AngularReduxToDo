@@ -1,6 +1,10 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
 import { Todo } from '../models/todo.models';
+import * as actions from '../todo.actions';
+
 
 @Component({
   selector: 'app-todo-item',
@@ -17,11 +21,15 @@ export class TodoItemComponent implements OnInit {
 
   editando: boolean = false;
 
-  constructor() { }
+  constructor(private store:Store<AppState>) { }
 
   ngOnInit(): void {
     this.chkComplete = new FormControl(this.todo.completado);
     this.txtInput = new FormControl(this.todo.texto, Validators.required);
+
+    this.chkComplete.valueChanges.subscribe(valor=>{
+      this.store.dispatch(actions.toggle({id: this.todo.id}));
+    })
   }
 
   edit(){
